@@ -1,0 +1,165 @@
+---
+title: "PSY 511: Assignment 3"
+author: "Kingsley M. Schroeder"
+date: "`r Sys.time()`"
+output: 
+  html_document:
+    self_contained: false
+  word_document:
+    fig_width: 5
+    fig_height: 5
+    fig_caption: false
+    df_print: kable
+  pdf_document:
+    toc: true
+    toc_depth: 2
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(psych)
+library(psych)
+library(plyr)
+library(lmSupport)
+library(car)
+source('http://psych.colorado.edu/~jclab/R/mcSummaryLM.R')
+
+cData <- read.csv("/Users/kingsleyschroeder/Box Sync/2 - Grad School Research/3 - Masters Thesis/DATA/ChildData_KMS_30Jan2017.csv")
+head(cData)
+
+pData <- read.csv("/Users/kingsleyschroeder/Box Sync/2 - Grad School Research/3 - Masters Thesis/DATA/ParentData_KMS_30Jan2017.csv")
+head(pData)
+
+mergeData <- merge(x = cData, y = pData, by.x = "id", by.y = "FamilyID")
+head(mergeData)
+
+# recode 99 to missing for all variables
+mergeData[mergeData==99] <- NA
+
+```
+
+## Introduction
+  From a developmental constructivist perspective, the first step in gender development is acquiring the ability to identify with and assign others to gender groups (e.g., Kohlberg, 1966; Martin & Halverson, 1981). This gender categorization as a foundational process makes logical sense; after all, how would children go about collecting gendered information without the categorical framework for such knowledge? When theorizing about the role of gender in children’s development, some researchers have suggested that this act of labeling and identifying with gender groups serves as the foundation for children’s interactions with their environments (Martin & Halverson, 1981). After children identify their own gender group, they can better understand what behaviors and traits are deemed appropriate and inappropriate within their cultural context.
+	
+  Children begin paying attention and adhering strictly to gender-appropriate behaviors from a very early age, with a surge in gender-consistent behaviors during the preschool years (Blakemore, Berenbaum, & Liben, 2009). Although this normative trend exists in the preschool years, there remain individual differences in the extent to which children adhere to these stereotypical behaviors, and those individual differences persist across childhood and into adulthood. Interestingly, these individual differences are not the result of differences in children’s stereotype knowledge; it is well-established that while all children develop an understanding of stereotypic gendered activities with age, individual children’s preferences for gendered activities vary (Signorella, Bigler, & Liben, 1993). Thus, the question presents of how these individual differences in gendered preferences and behaviors arise. Is it simply that children experience different degrees of pressure to conform to their gender roles? How do children’s experiences with parents and peers affect that felt pressure to conform?
+	
+### Felt Pressure to Conform to Gender Roles
+  As mentioned previously, children are aware of the culturally defined appropriate and inappropriate behaviors associated with each gender. However, children internalize these cultural definitions of gender to varying degrees, and thus feel pressure to conform to those definitions in different ways. Egan and Perry (2001) described the construct of felt pressure at length, suggesting that children experience feelings of pressure from parents, peers, and self for conformity to gender stereotypes, resulting in self-socialization of those gender roles. As a mechanism of self-socialization, felt pressure becomes particularly important in the conception of one’s gender identity and gendered behaviors, with felt pressure related to the endorsement of gender-typical gender-typed activities and traits (Egan & Perry, 2001). Egan and Perry (2001) suggested that felt pressure was an integral part of the way in which individuals identify with their gender group. Thus, the combination of felt pressure with (a) feelings of psychological compatibility with one’s gender (gender typicality and contentedness with gender assignment) and (b) the sentiment that one’s own sex is superior to the other (intergroup bias), serve as the components of Egan and Perry’s (2001) multidimensional gender identity.
+  
+  Although within the same cultural group, children are aware of the same standards of behavior for their own and other gender category, there still exists variability in the degree to which children experience felt pressure to conform to those roles and expectations. One logical potential explanation for this variation could be individual children’s own gender typicality. In other words, if a child is already enacting gender-typical behaviors and preferences, they may not feel strong pressure to act in gender-typical ways. However, a child who has more atypical preferences for their gender may feel more pressure to conform. In the original development of the measure of multidimensional gender identity, Egan and Perry (2001) examined the relationships between each of the components, finding that felt pressure was not related to gender typicality nor gender contentedness. The lack of association between felt pressure and gender typicality was further corroborated by an ethnic comparison study in the United States, including participants from White, Hispanic, and Black ethnic groups (Corby, Hodges, & Perry, 2007). If felt pressure to conform to gender roles is not related to concurrent gender typicality, then one possible way to explore the influences on felt pressure is through an investigation of the environments that may contribute to feelings of pressure to conform to gender roles (e.g., parents, peers). 
+  
+#### Parents and Felt Pressure 
+  Because much of the gender identity research has been conducted with preadolescents and adolescents, the influence of parents has rarely been included in study designs. However, parents are an integral part of Egan and Perry’s (2001) definition of felt pressure. Thus, relevant questions are how parents influence children’s felt pressure and whether parents intentionally pressure their children to participate in gender-typical activities. Previous research has suggested that there is a significant association between parents’ and children’s gender schemas, particularly when comparing other-directed gender attitudes (Tenenbaum & Leaper, 2002). However, little research has examined the relationship between parents’ expectation of their children’s gendered behaviors and children’s experiences of those expectations. Similarly, because the research on multifaceted gender identity has been conducted with mostly preadolescents and adolescents, the role of parents has been largely ignored. However, the current study attempts to study these concepts at a time during which parents are salient in children’s everyday environments and may have more of an impact on their children’s gendered behavior.  
+  
+### The Current Study
+  The purpose of the current research is to investigate the relationship between parent’s gender socialization attitudes and children’s felt pressure to conform to gender roles. Although Egan and Perry (2001) suggested that parents contribute to feelings of pressure to conform by including parents in their original measure of felt pressure, the current study attempts to better describe the relationship between (1) parents’ *intentional* behaviors and gender attitudes and (2) children’s felt pressure. In other words, the current study aims to better understand the mechanisms and qualities of parent-child interactions that may affect children’s felt pressure. It is hypothesized that parents’ gender socialization will be related to their children’s felt pressure to conform to gender roles, such that parents with more traditional gender socialization attitudes will tend to have children that experience greater degrees of felt pressure to conform, whereas parents who endorse more flexible gender socialization will tend to have children that experience lesser degrees of felt pressure to conform.
+
+## Method
+
+### Participants
+  Participants in the current study were 77 six- to 11-year-old children (48% girls, 52% boys; *N* based on power analysis conducted with G*Power; Faul, Erdfelder, Lang, & Bucher, 2007) recruited from central Pennsylvania and the American Midwest. Participants were recruited by word of mouth, through area schools and camps, and by snowball sampling. This age range was selected primarily because of the salience of multiple contexts for gendered behavior; with the start of school, children have exposure to exclusively peer contexts in addition to their home context. Additionally, school-age and middle childhood are important periods for cognitive and identity development (Eccles, 1999; Ruble et al., 2004), thus posing an interesting period to study the understanding of gender groups and their relation to individuals’ own behavior.
+
+### Measures
+#### Felt pressure to conform
+  Felt pressure to conform to gendered behaviors were measured with an adapted version of the felt pressure subscale of Egan and Perry’s (2001) Multifaceted Gender Identity measure. Patterson (2012) developed the revised version of the measure with the intention of studying gender identity constructs with a younger population. The scale consists of 16 items, including four items that capture felt pressure from parents, four items that capture felt pressure from friends, four items that capture felt pressure from school peers, and four items that capture felt pressure from siblings. Items presented gender conformity scenarios (e.g., “When girls want to do something that boys usually do (but girls don’t do), sometimes people might not like it.”) and children responded on a four-point scale indicating the degree to which different groups of people might (1) be upset or unhappy, (2) try to stop the behavior, (3) tease the child, and (4) try to change their behavior.
+#### Parents' Gender Socialization
+  Parents’ socialization of their children’s gendered behaviors were measured with Blakemore and Hill’s (2008) Child Gender Socialization Scale. The scale consists of 28 items designed to tap parents’ responses to preschoolers’ and elementary children’s gender-related behaviors (e.g., toys, activities, personality characteristics, behaviors, possible future occupations, importance of education). Parents responded to items that askd for an evaluation of their child’s participation in different activities (e.g., “taking ballet lessons”) and a rating of their agreement with a series of statements (e.g., “I would encourage my son to go to college.”), with both types of responses recorded on a 7-point Likert scale.
+
+### Procedure
+  After obtaining informed consent from parents and assent from child participants, researchers showed parents to a computer where they completed the parent gender socialization measure via online survey. Children were shown to a separate room where the researcher administered questions verbally. Because this research was portable, the interviews were conducted at a location that was most convenient for each family. However, to maintain consistency across locations, it was ensured that parents were absent from the interview area. As compensation for thier participation, each family received one $10 *Amazon* gift card.
+
+### Analysis
+#### Scoring
+##### Parent Gender Socialization
+  From the parent gender socialization scale, parents received a score for (1) approval of their child participating in feminine activities, (2) approval of their child participating in masculine activities, (3) approval of their child's participation in future masculine roles, (4) approval of their child's participation in future feminine roles, and (5) their explicit discouragement of gender atypical play.
+  
+  The first two scores (approval of masculine/feminine play) were generated from parents' ratings of how positively they viewed their child's participation in a series of age-appropriate activities. Individual item responses were recoded to numeric values, with 1 recoded as "very negative" and 7 recoded as "very positive." Scores for masculine and feminine items were separately averaged to produce two scores for each parent. 
+  
+  The second two scores (approval of future masculine/feminine roles) were generated from parents' endorsement of a series of statements about their child's future. Individual item responses were recoded to numeric values, with 1 recoded as “disagree strongly” and 7 recoded as “agree strongly.” Scores for masculine and feminine items were separately averaged to produce two scores for each parent.
+  
+  The final score (explicit discouragement of gender atypical play) was generated from parents' agreement with two items that addressed parents' discouragement of their child (1) playing with other-gender toys or games and (2) acting like a child of the other gender. Individual item responses were recoded to numeric values, with 1 recoded as “disagree strongly” and 7 recoded as “agree strongly.” Scores for these items were averaged to produce a single score for each parent.
+  
+#### Child Felt Pressure
+  In order to capture children's felt pressure specifically from parents, only those 4 items that addressed parents were included in the analysis. Individual item responses were recoded to numeric values: 1 for “really would not,” 2 for “sort of would not,” 3 for “sort of would,” and 4 for “really would.” Scores for all items were averaged to produce one score for each child that represented the degree of pressure they felt to conform with gender stereotypical behaviors. 
+
+```{r sample-data}
+mergeData$pFemAct <- (mergeData$BalletLessons + mergeData$ToyKitchen + mergeData$ToyJewelry + mergeData$ToyDish + mergeData$ToyNurse + mergeData$Barbie + mergeData$BabyDolls)/7
+mergeData$pMascAct <- (mergeData$Football + mergeData$Military + mergeData$ToyGuns + mergeData$GIJoe + mergeData$ToyTruck + mergeData$ToyCars)/6
+mergeData$pFemRoles <- (mergeData$Marriage + mergeData$ChildRearing)/2
+mergeData$pMascRoles <- (mergeData$EarnLiving)
+mergeData$pOppDisc <- (mergeData$OppSexGames + mergeData$ActOppSex)/2
+mergeData$cFP <- (mergeData$fp1 + mergeData$fp5 + mergeData$fp9 + mergeData$fp13)/4
+```
+
+#### Statistical Approach
+  To analyze the relationship between parents' gender socialization and children's felt pressure, linear regression models were used. The first model predicted children's felt pressure from parents' evaluation of their child's play with both masculine and feminine activities. The second model predicted children's felt pressure from parents' evaluation of their child's potential future masculine and feminine roles. The third model predicted children's felt pressure from parents' explicit discouragement of their child's other-gendered play. Child gender and child age were included in all analyses, with child age as a covariate and child gender interacting with the parent predictors.
+
+```{r}
+attach(mergeData)
+model1 <- lm(cFP ~ childage + childgender*pFemAct + childgender*pMascAct, data = mergeData)
+mcSummary(model1)
+
+model2 <- lm(cFP ~ childage + childgender*pFemRoles + childgender*pMascRoles, data = mergeData)
+mcSummary(model2)
+
+model3 <- lm(cFP ~ childage + childgender*pOppDisc)
+mcSummary(model3)
+```
+
+## Results
+  Intercorrelations for all variables in analyses can be found in Figure 1.
+  
+  The first model predicted children's felt pressure from their parents approval of feminine and masculine play. Results revealed a significant effect of age, such that older children experience less pressure to conform to gender roles, *t*(63) = -2.03, *p* = .05, PRE = .06, but no main effect of child gender. A main effect of parents' approval of masculine play was found such that more positive approval of masculine play predicted less felt pressure to conform to gender roles, *t*(63) = -2.24, *p* = .03, PRE = .07. However, approval of masculine play did not show a significant interaction with child gender. A significant interaction was found between approval of feminine play and gender, *t*(63) = -2.37, *p* = .02, PRE = .08. For boys, having parents who show low approval of feminine play experience greater felt pressure to conform to gender roles. Alternatively, for girls, the opposite is true: having parents who show high approval of feminine play experience greater felt pressure to conform to gender roles (see Figure 2).
+  
+  The second model predicted children's  felt pressure from their parents' approval of feminine and masculine future roles. Results showed a significant efffect of child age, such that older children experience less pressure to conform to gender roles, *t*(66) = -2.44, *p* = .02, PRE = .08. There was also a main effect of child gender such that boys were more likely to experience felt pressure than were girls,  *t*(66) = 2.08, *p* = .04, PRE = .06. Additionally, a significant interaction emerged between child gender and future masculine roles, *t*(66) = -2.04, *p* = .04, PRE = .06. For girls, having parents who strongly endorsed their child's future masculine roles was associated with higher degrees of felt pressure to conform to gender roles. For boys, having parents with high endorsement of their child's future masculine roles was associated with lower degrees of felt pressure to conform to gender roles (see Figure 3). 
+  
+  The third model predicted children's felt pressure from their parents' explicit discouragement of other-gendered play. Results demonstrated the same effect of child age as the other two models,  *t*(68) = -2.33, *p* = .02, PRE = .07. Interestingly, neither child gender nor parents' discouragement of other-gendered play affected children's experience of felt pressure to conform to gender roles.
+
+#### Figure 1
+```{r figure-1}
+attach(mergeData)
+pairs.panels(mergeData[,c("pFemAct","pMascAct","pFemRoles","pMascRoles","pOppDisc")])
+
+```
+
+#### Figure 2
+```{r figure-2}
+library(ggplot2) 
+mergeData$childgender<-as.factor(mergeData$childgender)
+ggplot(mergeData, aes(x = pFemAct, y = cFP, color = as.factor(childgender))) +
+  geom_point(shape = 16, size = 3.5) +
+  geom_smooth(method = lm, se = FALSE, fullrange = TRUE, size = 1) + 
+  #fullrange makes it equal line length
+  guides(color = guide_legend(title = NULL)) + theme_classic() + 
+  ylab("Child's Felt Pressure to Conform to Gender Roles") +
+  xlab("Parent's Approval of Feminine Play") +
+  scale_color_discrete(name="Gender",
+                     labels=c("Girls", "Boys"))
+```
+
+#### Figure 3
+```{r figure-3}
+library(ggplot2) 
+mergeData$childgender<-as.factor(mergeData$childgender)
+ggplot(mergeData, aes(x = pMascRoles, y = cFP, color = as.factor(childgender))) +
+  geom_point(shape = 16, size = 3.5, position = position_dodge(width = 0.05)) +
+  geom_smooth(method = lm, se = FALSE, fullrange = TRUE, size = 1) + 
+  #fullrange makes it equal line length
+  guides(color = guide_legend(title = NULL)) + theme_classic() + 
+  ylab("Child's Felt Pressure to Conform to Gender Roles") +
+  xlab("Parent's Endorsement of Future Masculine Roles") +
+  scale_color_discrete(name="Gender",
+                     labels=c("Girls", "Boys"))
+
+```
+
+## Conclusion
+  It was predicted that parents with more traditional gender attitudes (greater disapproval of their child's other-gendered play/behaviors/roles) would have children who experience greater felt pressure to conform to gender roles. Results showed that although the explicit discouragement of other-gendered play didn't affect children's felt pressure to conform to gender roles, parents' attitudes about their child's other-gendered play did affect children's experience of felt pressure. Regardless of parent attitudes, as children grow older, they experience a lower degree of felt pressure.
+  
+  For boys, parents' approval of feminine play (e.g., playing with dolls) was associated with lower degrees of felt pressure to conform. For girls, parents' approval of feminine play was associated with higher degrees of felt pressure to conform to gender roles. This is consistent with the hypothesis: parents who had stronger opinions of their child's gender-typed play (more traditional attitudes) had children who experience greater pressure to conform to gender roles.
+  
+  Strangely, parents' endorsement of future masculine roles (e.g., being the breadwinner of the family) was associated with lower degrees of felt pressure for boys, but higher degrees of felt pressure for girls.
+  
+  
+  
+  
